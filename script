@@ -7,6 +7,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "terraform_example" {
+  count = 4 # create four similar EC2 instances
   ami = "ami-00c03f7f7f2ec15c3"
   instance_type = "t2.micro"
   key_name = "AF1"
@@ -15,10 +16,17 @@ resource "aws_instance" "terraform_example" {
     source = "myscript.sh"
     destination = "/tmp/myscript.sh"
   }
-  
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chmod 755 /tmp/myscript.sh",
+      "sudo sh /tmp/myscript.sh",
+    ]
+  }
   connection {
     host = "${self.public_ip}"
     user = "ec2-user"
     private_key = "${file("AF1")}
    }
+  tags = {
+    Name = "Server ${each.key}" 
 }
