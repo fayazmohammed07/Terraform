@@ -1,0 +1,24 @@
+provider "aws" {
+# key from aws console #
+  access_key = "AKIAITBROOHIPLCH557A" 
+  secret_key = "CYuowplywQ+TlW8Ogah1oUIFZCtMs2FXPmD/ryY0"
+  region = "us-east-2"
+
+}
+
+resource "aws_instance" "terraform_example" {
+  ami = "ami-00c03f7f7f2ec15c3"
+  instance_type = "t2.micro"
+  key_name = "AF1"
+    
+  provisioner "file" {
+    source = "myscript.sh"
+    destination = "/tmp/myscript.sh"
+  }
+  
+  connection {
+    host = "${self.public_ip}"
+    user = "ec2-user"
+    private_key = "${file("AF1")}
+   }
+}
