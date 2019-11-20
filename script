@@ -1,4 +1,4 @@
-provider "aws" {
+  provider "aws" {
 # key from aws console #
   access_key = "AKIAITBROOHIPLCH557A" 
   secret_key = "CYuowplywQ+TlW8Ogah1oUIFZCtMs2FXPmD/ryY0"
@@ -6,7 +6,7 @@ provider "aws" {
 
 }
 
-resource "aws_instance" "terraform_example" {
+  resource "aws_instance" "terraform_example" {
   count = 4 # create four similar EC2 instances
   ami = "ami-00c03f7f7f2ec15c3"
   instance_type = "t2.micro"
@@ -25,8 +25,9 @@ resource "aws_instance" "terraform_example" {
   connection {
     host = "${self.public_ip}"
     user = "ec2-user"
-    private_key = "${file("AF1")}
+    private_key = "${file("AF1")}"
    }
   tags = {
     Name = "Server ${each.key}" 
+}
 }
