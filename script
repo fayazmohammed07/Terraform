@@ -1,7 +1,7 @@
   provider "aws" {
 # key from aws console #
-  access_key = "AKIAITBROOHIPLCH557A" 
-  secret_key = "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"
+  access_key = "Access keys" 
+  secret_key = "Secret keys"
   region = "us-east-2"
 
 }
